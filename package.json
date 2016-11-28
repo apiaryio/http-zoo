@@ -1,0 +1,28 @@
+{
+  "name": "http-zoo",
+  "version": "0.1.0",
+  "description": "HTTP edge cases test suite",
+  "main": "index.js",
+  "homepage": "https://github.com/apiaryio/http-zoo#readme",
+  "author": "Michal Holasek <michal.holasek@apiary.io>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apiaryio/http-zoo.git"
+  },
+  "engines": {
+    "node": ">=6.9.1",
+    "npm": ">=3.10.8"
+  },
+  "scripts": {
+    "start": "python -m hamms",
+    "test": "mocha test"
+  },
+  "dependencies": {
+    "axios": "^0.15.3"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  }
+}
