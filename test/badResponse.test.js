@@ -46,4 +46,38 @@ describe('Bad response', () => {
         done();
       });
   });
+
+  // Server accepts the request and sends back one byte every 5 seconds
+  it('should handle long running response gracefully (1)', (done) => {
+    const source = axios.CancelToken.source();
+
+    axios.get('http://localhost:5506', {
+      cancelToken: source.token,
+      timeout: 30000,
+    }).catch((err) => {
+      expect(err.message).to.equal('Request canceled by the user.');
+      done();
+    });
+
+    setTimeout(() => {
+      source.cancel('Request canceled by the user.');
+    }, 30000);
+  }).timeout(35000);
+
+  // Server accepts the request and sends back one byte every 30 seconds
+  it('should handle long running response gracefully (2)', (done) => {
+    const source = axios.CancelToken.source();
+
+    axios.get('http://localhost:5507', {
+      cancelToken: source.token,
+      timeout: 30000,
+    }).catch((err) => {
+      expect(err.message).to.equal('Request canceled by the user.');
+      done();
+    });
+
+    setTimeout(() => {
+      source.cancel('Request canceled by the user.');
+    }, 30000);
+  }).timeout(35000);
 });
