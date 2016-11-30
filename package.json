@@ -15,18 +15,24 @@
     "npm": ">=3.10.8"
   },
   "scripts": {
-    "start": "python -m hamms",
-    "test": "mocha test"
+    "build": "npm run clean && webpack --config config/webpack.test.js",
+    "clean": "rimraf dist",
+    "start": "npm run build && node dist/server.js",
+    "test": "mocha test/index.js"
   },
   "dependencies": {
-    "axios": "^0.15.3"
+    "axios": "^0.15.3",
+    "express": "^4.14.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "copy-webpack-plugin": "^4.0.1",
     "eslint": "^3.11.1",
     "eslint-config-airbnb-base": "^10.0.1",
     "eslint-plugin-import": "^2.2.0",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "rimraf": "^2.5.4",
+    "webpack": "^1.13.3"
   },
   "eslintConfig": {
     "extends": "airbnb-base",
