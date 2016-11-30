@@ -4,7 +4,7 @@ const expect = require('chai').expect;
 describe('Bad response', () => {
   // Server accepts traffic but never sends back data
   it('should handle no response gracefully', (done) => {
-    axios.get('http://localhost:5501', { timeout: 30000 })
+    axios.get('http://localhost:3000/responses/none', { timeout: 30000 })
       .catch((err) => {
         expect(err.code).to.equal('ECONNABORTED');
         done();
@@ -13,25 +13,42 @@ describe('Bad response', () => {
 
   // Server sends back an empty string immediately upon connection
   it('should handle empty response gracefully (GET)', (done) => {
-    axios.get('http://localhost:5502', { timeout: 30000 })
+    axios.get('http://localhost:3000/responses/empty', { timeout: 30000 })
       .catch((err) => {
-        expect(err.code).to.equal('ECONNRESET');
+        // Node.js returns 'ECONNRESET', browser 'Network Error'
+        const actual = err.code ? 'ECONNRESET' : 'Network Error';
+        const expected = err.code ? err.code : err.message;
+
+        expect(actual).to.equal(expected);
+
         done();
       });
   });
 
   // Server sends back an empty string after client sends data
   it('should handle empty response gracefully (POST)', (done) => {
-    axios.post('http://localhost:5503', 'foo bar', { timeout: 30000 })
+    axios.post('http://localhost:3000/responses/empty-string', 'foo bar', { timeout: 30000 })
       .catch((err) => {
-        expect(err.code).to.equal('ECONNRESET');
+        // Node.js returns 'ECONNRESET', browser 'Network Error'
+        const actual = err.code ? 'ECONNRESET' : 'Network Error';
+        const expected = err.code ? err.code : err.message;
+
+        expect(actual).to.equal(expected);
+
         done();
       });
   });
 
   // Server sends back a malformed response ("foo bar") immediately upon connection
   it('should handle malformed response gracefully (GET)', (done) => {
-    axios.get('http://localhost:5504', 'foo bar', { timeout: 30000 })
+    axios.get('http://localhost:3000/responses/malformed', { timeout: 30000 })
+      // Browser parses malformed response with 2OO status code
+      .then((res) => {
+        expect(res.status).to.equal(200);
+        expect(res.data).to.equal('foo bar');
+        done();
+      })
+      // ...but Node.js returns parsing error
       .catch((err) => {
         expect(err.code).to.equal('HPE_INVALID_CONSTANT');
         done();
@@ -40,7 +57,14 @@ describe('Bad response', () => {
 
   // Server sends back a malformed response ("foo bar") after the client sends data
   it('should handle malformed response gracefully (POST)', (done) => {
-    axios.post('http://localhost:5505', 'foo bar', { timeout: 30000 })
+    axios.post('http://localhost:3000/responses/malformed', 'foo bar', { timeout: 30000 })
+      // Browser parses malformed response with 2OO status code
+      .then((res) => {
+        expect(res.status).to.equal(200);
+        expect(res.data).to.equal('foo bar');
+        done();
+      })
+      // ...but Node.js returns parsing error
       .catch((err) => {
         expect(err.code).to.equal('HPE_INVALID_CONSTANT');
         done();
@@ -51,7 +75,7 @@ describe('Bad response', () => {
   it('should handle long running response gracefully (1)', (done) => {
     const source = axios.CancelToken.source();
 
-    axios.get('http://localhost:5506', {
+    axios.get('http://localhost:3000/responses/long-running/5', {
       cancelToken: source.token,
       timeout: 30000,
     }).catch((err) => {
@@ -68,7 +92,7 @@ describe('Bad response', () => {
   it('should handle long running response gracefully (2)', (done) => {
     const source = axios.CancelToken.source();
 
-    axios.get('http://localhost:5507', {
+    axios.get('http://localhost:3000/responses/long-running/30', {
       cancelToken: source.token,
       timeout: 30000,
     }).catch((err) => {
