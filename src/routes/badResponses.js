@@ -7,6 +7,10 @@ function longRunningResponse(req, res, timeout) {
   res.socket.write(parts[index]);
   index += 1;
 
+  res.socket.on('data', (data) => {
+    res.socket.write(data);
+  });
+
   const token = setInterval(() => {
     if (index === parts.length) {
       clearInterval(token);
