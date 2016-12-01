@@ -1,5 +1,7 @@
 const router = require('express').Router();
 
+let failrateCounter = 0;
+
 function longRunningResponse(req, res, timeout) {
   let index = 0;
   const parts = 'HTTP/1.1 204 No Content'.split('');
@@ -31,6 +33,16 @@ router.get('/empty', (req, res) => {
 router.post('/empty-string', (req, res) => {
   res.socket.end('');
   res.socket.destroy();
+});
+
+router.get('/failrate', (req, res) => {
+  if (failrateCounter === parseInt(req.query.rate, 10)) {
+    failrateCounter = 0;
+    res.socket.end('HTTP/1.1 204 No Content\r\n');
+    return;
+  }
+
+  failrateCounter += 1;
 });
 
 router.get('/long-running/5', (req, res) => {
