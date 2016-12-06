@@ -16,8 +16,8 @@ describe('Bad response', () => {
     axios.get('http://localhost:3000/responses/empty', { timeout: 30000 })
       .catch((err) => {
         // Node.js returns 'ECONNRESET', browser 'Network Error'
-        const actual = err.code ? 'ECONNRESET' : 'Network Error';
-        const expected = err.code ? err.code : err.message;
+        const actual = err.code ? err.code : err.message;
+        const expected = err.code ? 'ECONNRESET' : 'Network Error';
 
         expect(actual).to.equal(expected);
 
@@ -30,8 +30,8 @@ describe('Bad response', () => {
     axios.post('http://localhost:3000/responses/empty-string', 'foo bar', { timeout: 30000 })
       .catch((err) => {
         // Node.js returns 'ECONNRESET', browser 'Network Error'
-        const actual = err.code ? 'ECONNRESET' : 'Network Error';
-        const expected = err.code ? err.code : err.message;
+        const actual = err.code ? err.code : err.message;
+        const expected = err.code ? 'ECONNRESET' : 'Network Error';
 
         expect(actual).to.equal(expected);
 
@@ -50,8 +50,8 @@ describe('Bad response', () => {
       })
       // ...but Safari and Node.js return parsing error
       .catch((err) => {
-        const actual = err.code ? 'ECONNRESET' : 'Network Error';
-        const expected = err.code ? err.code : err.message;
+        const actual = err.code ? err.code : err.message;
+        const expected = err.code ? 'HPE_INVALID_CONSTANT' : 'Network Error';
 
         expect(actual).to.equal(expected);
 
@@ -70,8 +70,8 @@ describe('Bad response', () => {
       })
       // ...but Safari and Node.js return parsing error
       .catch((err) => {
-        const actual = err.code ? 'ECONNRESET' : 'Network Error';
-        const expected = err.code ? err.code : err.message;
+        const actual = err.code ? err.code : err.message;
+        const expected = err.code ? 'HPE_INVALID_CONSTANT' : 'Network Error';
 
         expect(actual).to.equal(expected);
 
@@ -112,4 +112,20 @@ describe('Bad response', () => {
       source.cancel('Request canceled by the user.');
     }, 30000);
   }).timeout(35000);
+
+  // Server sends incomplete response body (Content-Length and actual length differ)
+  it('should handle incomplete response body gracefully', (done) => {
+    axios.get('http://localhost:3000/responses/incomplete', { timeout: 30000 })
+      // Node.js does not care and parses response
+      .then((res) => {
+        expect(res.data.length).to.equal(112);
+        done();
+      })
+      // ...but browser is complaining
+      .catch((err) => {
+        expect(err.message).to.equal('Network Error');
+
+        done();
+      });
+  }).timeout(5000);
 });
