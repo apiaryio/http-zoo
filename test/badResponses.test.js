@@ -42,15 +42,19 @@ describe('Bad response', () => {
   // Server sends back a malformed response ("foo bar") immediately upon connection
   it('should handle malformed response gracefully (GET)', (done) => {
     axios.get('http://localhost:3000/responses/malformed', { timeout: 30000 })
-      // Browser parses malformed response with 2OO status code
+      // Chrome and Firefox parse malformed response with 2OO status code
       .then((res) => {
         expect(res.status).to.equal(200);
         expect(res.data).to.equal('foo bar');
         done();
       })
-      // ...but Node.js returns parsing error
+      // ...but Safari and Node.js return parsing error
       .catch((err) => {
-        expect(err.code).to.equal('HPE_INVALID_CONSTANT');
+        const actual = err.code ? 'ECONNRESET' : 'Network Error';
+        const expected = err.code ? err.code : err.message;
+
+        expect(actual).to.equal(expected);
+
         done();
       });
   });
@@ -58,15 +62,19 @@ describe('Bad response', () => {
   // Server sends back a malformed response ("foo bar") after the client sends data
   it('should handle malformed response gracefully (POST)', (done) => {
     axios.post('http://localhost:3000/responses/malformed', 'foo bar', { timeout: 30000 })
-      // Browser parses malformed response with 2OO status code
+      // Chrome and Firefox parse malformed response with 2OO status code
       .then((res) => {
         expect(res.status).to.equal(200);
         expect(res.data).to.equal('foo bar');
         done();
       })
-      // ...but Node.js returns parsing error
+      // ...but Safari and Node.js return parsing error
       .catch((err) => {
-        expect(err.code).to.equal('HPE_INVALID_CONSTANT');
+        const actual = err.code ? 'ECONNRESET' : 'Network Error';
+        const expected = err.code ? err.code : err.message;
+
+        expect(actual).to.equal(expected);
+
         done();
       });
   });
