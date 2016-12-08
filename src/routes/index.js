@@ -4,10 +4,12 @@ const headers = require('./invalidHeaders');
 const responses = require('./badResponses');
 const statusCodes = require('./statusCodes');
 
-module.exports = function routes(app) {
-  app.use('/', express.static(`${__dirname}/../public`));
+const router = express.Router();
 
-  app.use('/headers', headers);
-  app.use('/responses', responses);
-  app.use('/status', statusCodes);
-};
+router.use('/', express.static(`${__dirname}/../public`));
+
+router.use('/headers', headers);
+router.use('/responses', responses);
+router.use('/status', statusCodes);
+
+module.exports = router;
