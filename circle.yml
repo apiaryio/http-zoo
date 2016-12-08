@@ -1,0 +1,15 @@
+machine:
+  node:
+    version: 6.9.1
+
+  post:
+    - npm install -g npm@latest
+
+checkout:
+  post:
+    - npm install
+
+test:
+  pre:
+    - npm start:
+        background: true
