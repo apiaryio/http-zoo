@@ -6,8 +6,6 @@ const statusCodes = require('./statusCodes');
 
 const router = express.Router();
 
-router.use('/', express.static(`${__dirname}/../public`));
-
 router.use('/headers', headers);
 router.use('/responses', responses);
 router.use('/status', statusCodes);
