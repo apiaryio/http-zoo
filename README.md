@@ -1,4 +1,4 @@
-# http-zoo
+# node-hamms
 
 This repository contains a set of tests / specifications to test HTTP clients for various HTTP protocol edge cases.
 We are using [axios](https://github.com/mzabriskie/axios) HTTP client and custom HTTP server (inspired by [hamms](https://github.com/kevinburke/hamms)) so far.
