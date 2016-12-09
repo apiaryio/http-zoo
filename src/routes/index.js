@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.use('/headers', headers);
 router.use('/responses', responses);
-router.use('/status', statusCodes);
+router.use('/statuses', statusCodes);
 
 module.exports = router;
