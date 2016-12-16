@@ -17,7 +17,7 @@ module.exports = function configuration(config) {
       'test/*.js': ['browserify'],
     },
 
-    reporters: ['progress'],
+    reporters: ['mocha'],
 
     port: 9876,
 
