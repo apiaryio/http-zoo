@@ -59,12 +59,8 @@ router.get('/incomplete', (req, res) => {
   res.socket.end(response);
 });
 
-router.get('/long-running/5', (req, res) => {
-  longRunningResponse(req, res, 5000);
-});
-
-router.get('/long-running/30', (req, res) => {
-  longRunningResponse(req, res, 30000);
+router.get('/long-running', (req, res) => {
+  longRunningResponse(req, res, parseInt(req.query.delay, 10) * 1000);
 });
 
 router.get('/malformed', (req, res) => {

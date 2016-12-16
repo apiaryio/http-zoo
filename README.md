@@ -122,10 +122,10 @@ We are using [axios](https://github.com/mzabriskie/axios) HTTP client and custom
   {"host":"localhost:3000","user-agent":"curl/7.49.1","accept"
   ```
 
-* ```/responses/long-running/5``` [GET] - Server accepts the request and returns back one byte every 5 seconds
+* ```/responses/long-running?delay={n}``` [GET] - Server accepts the request and returns back one byte every ```n``` seconds
 
     ```
-    GET http://localhost:3000/responses/long-running/5 HTTP/1.1
+    GET http://localhost:3000/responses/long-running?delay=5 HTTP/1.1
     Host: localhost:3000
     User-Agent: curl/7.49.1
     Accept: */*
@@ -178,10 +178,11 @@ We are using [axios](https://github.com/mzabriskie/axios) HTTP client and custom
 
 ### Status Codes
 
-* ```/status/{statusCode}``` [GET] - Returns a response with given status code (200, 201, 400, 401, 403, 404, 405, 429, 500, 503)
+* ```/statuses/{statusCode}``` [GET] - Returns a response with given status code
 
     ```
-    GET http://localhost:3000/status/200 HTTP/1.1
+    GET http://localhost:3000/statuses/200 HTTP/1.1
+
     Host: localhost:3000
     User-Agent: curl/7.49.1
     Accept: */*

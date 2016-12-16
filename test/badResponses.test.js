@@ -83,7 +83,7 @@ describe('Bad response', () => {
   it('should handle long running response gracefully (1)', (done) => {
     const source = axios.CancelToken.source();
 
-    axios.get('http://localhost:3000/responses/long-running/5', {
+    axios.get('http://localhost:3000/responses/long-running?delay=5', {
       cancelToken: source.token,
       timeout: 30000,
     }).catch((err) => {
@@ -100,7 +100,7 @@ describe('Bad response', () => {
   it('should handle long running response gracefully (2)', (done) => {
     const source = axios.CancelToken.source();
 
-    axios.get('http://localhost:3000/responses/long-running/30', {
+    axios.get('http://localhost:3000/responses/long-running?delay=30', {
       cancelToken: source.token,
       timeout: 30000,
     }).catch((err) => {
