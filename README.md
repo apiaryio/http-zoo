@@ -36,7 +36,7 @@ We are using [axios](https://github.com/mzabriskie/axios) HTTP client and custom
     {"host":"localhost:3000","user-agent":"curl/7.49.1","accept":"*/*"}
     ```
 
- * ```/headers/content-length``` [GET] - Returns a response with different body length than stated in ```Content-Length``` header
+* ```/headers/content-length``` [GET] - Returns a response with different body length than stated in ```Content-Length``` header
 
     ```
     GET http://localhost:3000/headers/content-length HTTP/1.1
