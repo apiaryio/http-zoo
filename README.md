@@ -135,6 +135,19 @@ We are using [axios](https://github.com/mzabriskie/axios) HTTP client and custom
     HTTP/1.1 204 No Content
     ```
 
+* ```/responses/long-running/30``` [GET] - Server accepts the request and returns back one byte every 30 seconds
+
+    ```
+    GET http://localhost:3000/responses/long-running/30 HTTP/1.1
+    Host: localhost:3000
+    User-Agent: curl/7.49.1
+    Accept: */*
+
+
+    ...after 720 seconds.
+    HTTP/1.1 204 No Content
+    ```
+
 * ```/responses/malformed``` [GET] - Server returns malformed response (```foo bar```) immediately upon connection
 
     ```
@@ -169,6 +182,7 @@ We are using [axios](https://github.com/mzabriskie/axios) HTTP client and custom
 
     ```
     GET http://localhost:3000/statuses/200 HTTP/1.1
+
     Host: localhost:3000
     User-Agent: curl/7.49.1
     Accept: */*
