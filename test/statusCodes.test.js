@@ -25,7 +25,7 @@ describe('Status Codes', () => {
       };
 
       axios.get(`http://localhost:3000/statuses/${item.code}`)
-        .then(handleAxiosResponse, handleAxiosResponse);
+        .then(handleAxiosResponse, (err) => { handleAxiosResponse(err.response); });
     }).timeout(5000);
   });
 });
