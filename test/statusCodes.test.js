@@ -15,19 +15,18 @@ describe('Status Codes', () => {
     { code: 503, text: 'Service Unavailable' },
   ];
 
+
   statuses.forEach((item) => {
     it(`should handle ${item.code} status code gracefully`, (done) => {
+
+      const handleAxiosResponse = (res) => {
+        expect(res.status).to.equal(item.code);
+        expect(res.statusText).to.equal(item.text);
+        done();
+      };
+
       axios.get(`http://localhost:3000/statuses/${item.code}`, { timeout: 30000 })
-        .then((res) => {
-          expect(res.status).to.equal(item.code);
-          expect(res.statusText).to.equal(item.text);
-          done();
-        })
-        .catch((err) => {
-          expect(err.response.status).to.equal(item.code);
-          expect(err.response.statusText).to.equal(item.text);
-          done();
-        });
+        .then(handleAxiosResponse, handleAxiosResponse);
     }).timeout(5000);
   });
 });

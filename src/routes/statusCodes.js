@@ -3,11 +3,10 @@ const router = require('express').Router();
 
 router.get('/:code', (req, res) => {
   if (!http.STATUS_CODES[req.params.code]) {
-    res.status(404).end();
-    return;
+    return res.status(404).end();
   }
 
-  res.status(req.params.code).end();
+  return res.status(req.params.code).end();
 });
 
 module.exports = router;
