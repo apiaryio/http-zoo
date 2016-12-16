@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "src/routes/index.js",
   "description": "HTTP edge cases test suite",
-  "main": "index.js",
   "homepage": "https://github.com/apiaryio/http-zoo#readme",
   "author": "Michal Holasek <michal.holasek@apiary.io>",
   "license": "MIT",
@@ -16,9 +15,6 @@
     "npm": ">=3.10.8"
   },
   "scripts": {
-    "build": "npm run clean && webpack --config config/webpack.test.js",
-    "clean": "rimraf dist",
-    "start": "npm run build && node dist/server.js",
     "test": "mocha test/index.js"
   },
   "dependencies": {
@@ -28,13 +24,10 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "copy-webpack-plugin": "^4.0.1",
     "eslint": "^3.11.1",
     "eslint-config-airbnb-base": "^10.0.1",
     "eslint-plugin-import": "^2.2.0",
-    "mocha": "^3.2.0",
-    "rimraf": "^2.5.4",
-    "webpack": "^1.13.3"
+    "mocha": "^3.2.0"
   },
   "eslintConfig": {
     "extends": "airbnb-base",
