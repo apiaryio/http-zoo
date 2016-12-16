@@ -18,14 +18,13 @@ describe('Status Codes', () => {
 
   statuses.forEach((item) => {
     it(`should handle ${item.code} status code gracefully`, (done) => {
-
       const handleAxiosResponse = (res) => {
         expect(res.status).to.equal(item.code);
         expect(res.statusText).to.equal(item.text);
         done();
       };
 
-      axios.get(`http://localhost:3000/statuses/${item.code}`, { timeout: 30000 })
+      axios.get(`http://localhost:3000/statuses/${item.code}`)
         .then(handleAxiosResponse, handleAxiosResponse);
     }).timeout(5000);
   });
