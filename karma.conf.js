@@ -1,4 +1,16 @@
 const customLaunchers = {
+  Chrome: {
+    base: 'SauceLabs',
+    browserName: 'chrome',
+    version: '55.0',
+    platform: 'Windows 10',
+  },
+  Edge: {
+    base: 'SauceLabs',
+    browserName: 'microsoftedge',
+    version: '14.14393',
+    platform: 'Windows 10',
+  },
   Firefox: {
     base: 'SauceLabs',
     browserName: 'firefox',
@@ -10,18 +22,6 @@ const customLaunchers = {
     browserName: 'safari',
     version: '10.0',
     platform: 'OS X 10.11',
-  },
-  Edge: {
-    base: 'SauceLabs',
-    browserName: 'microsoftedge',
-    version: '14.14393',
-    platform: 'Windows 10',
-  },
-  Chrome: {
-    base: 'SauceLabs',
-    browserName: 'chrome',
-    version: '55.0',
-    platform: 'Windows 10',
   },
 };
 
@@ -37,7 +37,7 @@ module.exports = function configuration(config) {
     reporters: process.env.CI ? ['mocha', 'saucelabs'] : ['mocha'],
     port: 9876,
     colors: true,
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_WARN,
     autoWatch: false,
     browsers: process.env.CI ? Object.keys(customLaunchers) : ['Chrome'],
     customLaunchers: process.env.CI ? customLaunchers : undefined,
@@ -45,11 +45,12 @@ module.exports = function configuration(config) {
     concurrency: Infinity,
     browserDisconnectTimeout: 10000,
     browserDisconnectTolerance: 1,
-    browserNoActivityTimeout: 4 * 60 * 1000,
-    captureTimeout: 4 * 60 * 1000,
+    browserNoActivityTimeout: 6 * 60 * 1000,
+    captureTimeout: 6 * 60 * 1000,
     client: {
+      captureConsole: false,
       mocha: {
-        timeout: 45000,
+        timeout: 36000,
       },
     },
   });
