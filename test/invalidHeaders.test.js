@@ -17,5 +17,5 @@ describe('Invalid Headers', () => {
         expect(err.code).to.equal('HPE_INVALID_CONSTANT');
         done();
       });
-  }).timeout(5000);
+  }).timeout(10000);
 });

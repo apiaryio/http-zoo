@@ -30,40 +30,27 @@ module.exports = function configuration(config) {
     sauceLabs: {
       testName: 'Node-hamms',
     },
-
     basePath: '',
-
     frameworks: ['browserify', 'mocha'],
-
-    files: [
-      'test/*.js',
-    ],
-
-    exclude: [
-    ],
-
-    preprocessors: {
-      'test/*.js': ['browserify'],
-    },
-
+    files: ['test/*.js'],
+    preprocessors: { 'test/*.js': ['browserify'] },
     reporters: process.env.CI ? ['mocha', 'saucelabs'] : ['mocha'],
-
     port: 9876,
-
     colors: true,
-
     logLevel: config.LOG_INFO,
-
     autoWatch: false,
-
     browsers: process.env.CI ? Object.keys(customLaunchers) : ['Chrome'],
-
     customLaunchers: process.env.CI ? customLaunchers : undefined,
-
     singleRun: true,
-
     concurrency: Infinity,
-
-    browserNoActivityTimeout: 35000,
+    browserDisconnectTimeout: 10000,
+    browserDisconnectTolerance: 1,
+    browserNoActivityTimeout: 4 * 60 * 1000,
+    captureTimeout: 4 * 60 * 1000,
+    client: {
+      mocha: {
+        timeout: 45000,
+      },
+    },
   });
 };

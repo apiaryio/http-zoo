@@ -9,7 +9,7 @@ describe('Bad response', () => {
         expect(err.code).to.equal('ECONNABORTED');
         done();
       });
-  }).timeout(35000);
+  }).timeout(45000);
 
   // Server sends back an empty string immediately upon connection
   it('should handle empty response gracefully (GET)', (done) => {
@@ -94,7 +94,7 @@ describe('Bad response', () => {
     setTimeout(() => {
       source.cancel('Request canceled by the user.');
     }, 30000);
-  }).timeout(35000);
+  }).timeout(45000);
 
   // Server accepts the request and sends back one byte every 30 seconds
   it('should handle long running response gracefully (2)', (done) => {
@@ -111,7 +111,7 @@ describe('Bad response', () => {
     setTimeout(() => {
       source.cancel('Request canceled by the user.');
     }, 30000);
-  }).timeout(35000);
+  }).timeout(45000);
 
   // Server sends incomplete response body (Content-Length and actual length differ)
   it('should handle incomplete response body gracefully', (done) => {
@@ -127,5 +127,5 @@ describe('Bad response', () => {
 
         done();
       });
-  }).timeout(5000);
+  }).timeout(10000);
 });

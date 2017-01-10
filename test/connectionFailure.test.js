@@ -9,5 +9,5 @@ describe('Connection Failure', () => {
         expect(err.code).to.equal('ECONNABORTED');
         done();
       });
-  }).timeout(35000);
+  }).timeout(45000);
 });
