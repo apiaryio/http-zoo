@@ -6,3 +6,5 @@ test:
   pre:
     - npm start:
         background: true
+    
+    - curl --retry 10 --retry-delay 2 -v http://localhost:3000
