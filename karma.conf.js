@@ -1,23 +1,30 @@
 const customLaunchers = {
-  Chrome: {
+  sl_Chrome: {
     base: 'SauceLabs',
     browserName: 'chrome',
     version: '55.0',
     platform: 'Windows 10',
   },
-  Edge: {
+  sl_Chrome_osx: {
+    base: 'SauceLabs',
+    browserName: 'chrome',
+    version: '55.0',
+    platform: 'OS X 10.11',
+  },
+
+  sl_Edge: {
     base: 'SauceLabs',
     browserName: 'microsoftedge',
     version: '14.14393',
     platform: 'Windows 10',
   },
-  Firefox: {
+  sl_Firefox: {
     base: 'SauceLabs',
     browserName: 'firefox',
     version: '47.0',
     platform: 'Windows 10',
   },
-  Safari: {
+  sl_Safari: {
     base: 'SauceLabs',
     browserName: 'safari',
     version: '10.0',
@@ -34,24 +41,16 @@ module.exports = function configuration(config) {
     frameworks: ['browserify', 'mocha'],
     files: ['test/*.js'],
     preprocessors: { 'test/*.js': ['browserify'] },
-    reporters: process.env.NASINO ? ['mocha', 'saucelabs'] : ['mocha'],
+    reporters: process.env.CI ? ['mocha', 'saucelabs'] : ['mocha'],
     port: 9876,
     colors: true,
-    logLevel: config.LOG_WARN,
+    logLevel: config.LOG_DEBUG,
     autoWatch: false,
-    browsers: process.env.NASINO ? Object.keys(customLaunchers) : ['Chrome', 'Firefox'],
-    customLaunchers: process.env.NASINO ? customLaunchers : undefined,
+    browsers: process.env.CI ? Object.keys(customLaunchers).concat('Chrome', 'Firefox') : ['Chrome', 'Firefox'],
+    customLaunchers: process.env.CI ? customLaunchers : undefined,
     singleRun: true,
-    concurrency: Infinity,
-    browserDisconnectTimeout: 10000,
-    browserDisconnectTolerance: 1,
-    browserNoActivityTimeout: 6 * 60 * 1000,
-    captureTimeout: 6 * 60 * 1000,
-    client: {
-      captureConsole: false,
-      mocha: {
-        timeout: 36000,
-      },
-    },
+    concurrency: 2,
+    browserNoActivityTimeout: 0,
+    captureTimeout: 0,
   });
 };
