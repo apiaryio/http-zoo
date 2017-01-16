@@ -5,7 +5,7 @@ describe('Bad response', () => {
   // Server accepts traffic but never sends back data
   it('should handle no response gracefully', (done) => {
     axios.get('http://localhost:3000/responses/none', { timeout: 30000 })
-      .catch((err) => {
+      .then(done.bind(this, new Error('This promise shuold not be resolved')), (err) => {
         expect(err.code).to.equal('ECONNABORTED');
         done();
       });
@@ -14,7 +14,7 @@ describe('Bad response', () => {
   // Server sends back an empty string immediately upon connection
   it('should handle empty response gracefully (GET)', (done) => {
     axios.get('http://localhost:3000/responses/empty', { timeout: 30000 })
-      .catch((err) => {
+      .then(done.bind(this, new Error('This promise shuold not be resolved')), (err) => {
         // Node.js returns 'ECONNRESET', browser 'Network Error'
         const actual = err.code ? err.code : err.message;
         const expected = err.code ? 'ECONNRESET' : 'Network Error';
@@ -28,7 +28,7 @@ describe('Bad response', () => {
   // Server sends back an empty string after client sends data
   it('should handle empty response gracefully (POST)', (done) => {
     axios.post('http://localhost:3000/responses/empty-string', 'foo bar', { timeout: 30000 })
-      .catch((err) => {
+      .then(done.bind(this, new Error('This promise shuold not be resolved')), (err) => {
         // Node.js returns 'ECONNRESET', browser 'Network Error'
         const actual = err.code ? err.code : err.message;
         const expected = err.code ? 'ECONNRESET' : 'Network Error';
@@ -86,7 +86,7 @@ describe('Bad response', () => {
     axios.get('http://localhost:3000/responses/long-running?delay=5', {
       cancelToken: source.token,
       timeout: 30000,
-    }).catch((err) => {
+    }).then(done.bind(this, new Error('This promise shuold not be resolved')), (err) => {
       expect(err.message).to.equal('Request canceled by the user.');
       done();
     });
@@ -103,7 +103,7 @@ describe('Bad response', () => {
     axios.get('http://localhost:3000/responses/long-running?delay=30', {
       cancelToken: source.token,
       timeout: 30000,
-    }).catch((err) => {
+    }).then(done.bind(this, new Error('This promise shuold not be resolved')), (err) => {
       expect(err.message).to.equal('Request canceled by the user.');
       done();
     });
