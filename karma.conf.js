@@ -53,7 +53,7 @@ module.exports = function configuration(config) {
     concurrency: 1,
     browserDisconnectTimeout: 10000,
     browserDisconnectTolerance: 1,
-    browserNoActivityTimeout: 4 * 60 * 1000,
+    browserNoActivityTimeout: 4 * 60 * 100000,
     captureTimeout: 4 * 60 * 1000,
     client: {
       mocha: {
