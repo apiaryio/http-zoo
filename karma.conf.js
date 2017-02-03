@@ -9,9 +9,9 @@ module.exports = function configuration(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,
-    browsers: ['Chrome', 'Firefox'],
+    browsers: ['Safari'],
     singleRun: true,
-    concurrency: 1,
+    concurrency: 3,
     browserNoActivityTimeout: 35000,
   });
 };
